@@ -4,40 +4,28 @@ import { indexEmbeddings } from './ai'
 const router = Router()
 const todos: any[] = []
 
+// Create
 router.post('/', async (req: Request, res: Response) => {
+  const { id, task } = req.body
+
   try {
     const res_ = await indexEmbeddings(
       'http://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html'
     )
 
-    res.status(201)
+    if (res_) {
+      res.status(200).json({ message: 'done' })
+    }
   } catch (error) {
+    console.error('🚨 error:', error)
     res.status(500).json({ message: 'An internal server error occurred' })
   }
 })
 
-// Create
-// router.post('/', (req: Request, res: Response) => {
-//   try {
-//     const { id, task } = req.body
-
-//     if (!id || !task) {
-//       return res
-//         .status(400)
-//         .json({ message: 'Id and task are required fields' })
-//     }
-
-//     todos.push({ id, task })
-//     res.status(201).json({ id, task })
-//   } catch (error) {
-//     res.status(500).json({ message: 'An internal server error occurred' })
-//   }
-// })
-
 // Read
 router.get('/', (req: Request, res: Response) => {
   try {
-    res.status(200).json(todos)
+    res.status(200).json({ data: 2 })
   } catch (error) {
     res.status(500).json({ message: 'An internal server error occurred' })
   }
