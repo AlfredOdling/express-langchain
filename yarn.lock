@@ -858,9 +858,9 @@ langchain@^0.0.136:
     zod-to-json-schema "^3.20.4"
 
 langsmith@~0.0.26:
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/langsmith/-/langsmith-0.0.27.tgz#545578f46bed00ae22a7f8dfca567225820d3a0a"
-  integrity sha512-0evLDxxieqExJVZ+2qbZKw1j7f4ywiejWo/9GclxfWIcRo69QuSMhsvZ58ywUeaEY3OaVgT3eB8b5i+QfcdDwg==
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/langsmith/-/langsmith-0.0.28.tgz#93de3eccafeb726bf7da76796dc8a7f2065c8e2a"
+  integrity sha512-vGB91AOniSQAcOcfJyjbNbdA/KfVY5xVikXLpLofLQsFwWI8M8Tr8kDKQLUDoY0k89uwVl08ubmfccFQTOPj7g==
   dependencies:
     "@types/uuid" "^9.0.1"
     commander "^10.0.1"
