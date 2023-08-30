@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "dev": "tsx index.ts",
     "start": "tsx watch index.ts",
     "build": "tsc"
   },
