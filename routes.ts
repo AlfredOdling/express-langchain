@@ -10,8 +10,6 @@ router.post('/', async (req: Request, res: Response) => {
       'http://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html'
     )
 
-    console.log(res_)
-
     res.status(201)
   } catch (error) {
     res.status(500).json({ message: 'An internal server error occurred' })
