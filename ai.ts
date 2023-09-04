@@ -1,12 +1,14 @@
 import { PineconeClient } from '@pinecone-database/pinecone'
 import * as dotenv from 'dotenv'
-import { VectorDBQAChain } from 'langchain/chains'
+import { RetrievalQAChain, loadQAStuffChain } from 'langchain/chains'
 import { Document } from 'langchain/document'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { PineconeStore } from 'langchain/vectorstores/pinecone'
 import { OpenAI } from 'langchain/llms/openai'
 import { ApifyDatasetLoader } from 'langchain/document_loaders/web/apify_dataset'
 import { GraphQLClient, gql } from 'graphql-request'
+import { promptTemplate } from './promtTemplate'
+import { PromptTemplate } from 'langchain/prompts'
 
 dotenv.config()
 
@@ -128,16 +130,21 @@ export const loadEmbeddingsAndQuestion = async (
       },
     }
   )
+  const prompt = PromptTemplate.fromTemplate(promptTemplate)
 
   const model = new OpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY,
   })
 
-  const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
-    k: 1,
+  const chain = new RetrievalQAChain({
+    retriever: vectorStore.asRetriever(),
+    combineDocumentsChain: loadQAStuffChain(model, { prompt }),
     returnSourceDocuments: true,
   })
 
-  const response = await chain.call({ query })
+  const response = await chain.call({
+    query,
+  })
+
   return response
 }
