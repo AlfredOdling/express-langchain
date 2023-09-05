@@ -86,10 +86,10 @@ export const scrapeAndIndexEmbeddings = async (
       startUrls: [
         {
           url,
-          userData: {
-            sourceId,
-            userEmail,
-          },
+          // userData: {
+          //   sourceId,
+          //   userEmail,
+          // },
         },
       ],
     },
