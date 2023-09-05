@@ -82,9 +82,14 @@ export const scrapeAndIndexEmbeddings = async (
   const loader = await ApifyDatasetLoader.fromActorCall(
     'apify/website-content-crawler',
     {
+      saveScreenshots: false,
       startUrls: [
         {
           url,
+          userData: {
+            sourceId,
+            userEmail,
+          },
         },
       ],
     },
@@ -101,6 +106,7 @@ export const scrapeAndIndexEmbeddings = async (
     }
   )
   const docs = await loader.load()
+  console.log('🚀  docs:', docs)
 
   return await PineconeStore.fromDocuments(
     docs,
@@ -146,5 +152,9 @@ export const loadEmbeddingsAndQuestion = async (
     query,
   })
 
-  return response
+  return {
+    text: response.text,
+    sourceDocuments: response.sourceDocuments,
+    role: 'ai',
+  }
 }
