@@ -20,10 +20,10 @@ await client.init({
 const pineconeIndex = client.Index(process.env.PINECONE_INDEX)
 
 const client8Base = new GraphQLClient(
-  'https://uk.api.8base.com/cl1bujdae06nb09mhasqg4we4',
+  process.env.REACT_APP_8BASE_API_ENDPOINT,
   {
     headers: {
-      authorization: `Bearer ${'6efa64ce-8c8c-432e-b54f-a80dc6e2dd08'}`,
+      authorization: `Bearer ${process.env.REACT_APP_8BASE_TOKEN}`,
       //environment: Env.EIGHTBASE_ENVIRONMENT,
     },
   }
@@ -106,7 +106,6 @@ export const scrapeAndIndexEmbeddings = async (
     }
   )
   const docs = await loader.load()
-  console.log('🚀  docs:', docs)
 
   return await PineconeStore.fromDocuments(
     docs,
