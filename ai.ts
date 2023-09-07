@@ -9,6 +9,7 @@ import { ApifyDatasetLoader } from 'langchain/document_loaders/web/apify_dataset
 import { GraphQLClient, gql } from 'graphql-request'
 import { promptTemplate } from './promtTemplate'
 import { PromptTemplate } from 'langchain/prompts'
+import { CharacterTextSplitter } from 'langchain/text_splitter'
 
 dotenv.config()
 
@@ -105,7 +106,14 @@ export const scrapeAndIndexEmbeddings = async (
       },
     }
   )
-  const docs = await loader.load()
+
+  const splitter = new CharacterTextSplitter({
+    separator: '\n\n',
+    chunkSize: 1500,
+    chunkOverlap: 200,
+  })
+
+  const docs = await loader.loadAndSplit(splitter)
 
   return await PineconeStore.fromDocuments(
     docs,
